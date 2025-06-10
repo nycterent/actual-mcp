@@ -61,9 +61,49 @@ export ACTUAL_PASSWORD="your-password"
 export ACTUAL_BUDGET_SYNC_ID="your-budget-id"
 ```
 
+## Running with Docker or Podman
+
+You can also build and run the server in a container. From the project root
+build the image:
+
+```bash
+docker build -t actual-mcp .
+# or with Podman
+podman build -t actual-mcp .
+```
+
+Run the container, providing your Actual configuration via environment
+variables and mapping the exposed port:
+
+```bash
+docker run -it --rm \
+  -e ACTUAL_DATA_DIR=/path/to/your/actual/data \
+  -p 3000:3000 actual-mcp
+```
+
+If connecting to a remote Actual server, set `ACTUAL_SERVER_URL` and
+`ACTUAL_PASSWORD` instead. Podman users can replace `docker` with `podman`
+in the commands above.
+
+With the container running, any MCP-compatible client can connect to the
+SSE endpoint at `http://localhost:3000`. For example, a Claude Desktop
+configuration might look like:
+
+```json
+{
+  "mcpServers": {
+    "actualBudget": {
+      "transport": "sse",
+      "url": "http://localhost:3000"
+    }
+  }
+}
+```
+
 ## Usage with Claude Desktop
 
-To use this server with Claude Desktop, add it to your Claude configuration:
+To use this server with Claude Desktop, add it to your configuration.
+If you are running the server directly with Node, use the following setup:
 
 On MacOS:
 ```bash
@@ -85,6 +125,19 @@ Add the following to your configuration:
       "env": {
         "ACTUAL_DATA_DIR": "/path/to/your/actual/data"
       }
+    }
+  }
+}
+```
+
+If you started the server using Docker or Podman, use this configuration instead:
+
+```json
+{
+  "mcpServers": {
+    "actualBudget": {
+      "transport": "sse",
+      "url": "http://localhost:3000"
     }
   }
 }
