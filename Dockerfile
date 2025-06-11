@@ -22,4 +22,5 @@ ENV NODE_ENV=production
 RUN npm ci --omit=dev
 
 EXPOSE 3000
-ENTRYPOINT ["node", "build/index.js", "--sse"]
+# Default to stdio mode for Claude Desktop
+ENTRYPOINT ["node", "build/index.js"]
