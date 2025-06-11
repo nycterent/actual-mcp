@@ -115,3 +115,13 @@ export async function getTransactions(accountId: string, start: string, end: str
   await initActualApi();
   return api.getTransactions(accountId, start, end);
 }
+
+export async function createRule(rule: unknown) {
+  await initActualApi();
+  return api.createRule(rule as any);
+}
+
+export async function getRules() {
+  await initActualApi();
+  return api.getRules();
+}

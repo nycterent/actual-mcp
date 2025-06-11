@@ -18,6 +18,7 @@ The Actual Budget MCP Server allows you to interact with your personal financial
 - **`spending-by-category`** - Generate spending breakdowns categorized by type
 - **`monthly-summary`** - Get monthly income, expenses, and savings metrics
 - **`balance-history`** - View account balance changes over time
+- **`create-rule`** - Create a categorization rule based on payee
 
 ### Prompts
 - **`financial-insights`** - Generate insights and recommendations based on your financial data

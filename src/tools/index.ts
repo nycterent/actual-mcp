@@ -13,6 +13,7 @@ import {
   SpendingByCategoryArgs,
   MonthlySummaryArgs,
   BalanceHistoryArgs,
+  CreateRuleArgs,
 } from "../types.js";
 import {
   schema as getTransactionsSchema,
@@ -30,6 +31,10 @@ import {
   schema as balanceHistorySchema,
   handler as balanceHistoryHandler,
 } from "./balance-history/index.js";
+import {
+  schema as createRuleSchema,
+  handler as createRuleHandler,
+} from "./create-rule/index.js";
 import { error, errorFromCatch } from "../utils/response.js";
 
 export const setupTools = (server: Server) => {
@@ -67,6 +72,10 @@ export const setupTools = (server: Server) => {
           return balanceHistoryHandler(args as unknown as BalanceHistoryArgs);
         }
 
+        case "create-rule": {
+          return createRuleHandler(args as unknown as CreateRuleArgs);
+        }
+
         default:
           return error(`Unknown tool ${name}`);
       }
@@ -86,6 +95,7 @@ function toolsSchema() {
       spendingByCategorySchema,
       monthlySummarySchema,
       balanceHistorySchema,
+      createRuleSchema,
     ],
   };
 }
