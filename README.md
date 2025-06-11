@@ -80,6 +80,7 @@ docker run -i --rm \
   -e ACTUAL_DATA_DIR=/path/to/your/actual/data \
   actual-mcp
 ```
+This command uses the container's default entrypoint, which starts the server in stdio mode.
 
 ### Running the SSE server
 
