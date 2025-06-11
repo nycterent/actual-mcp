@@ -105,7 +105,7 @@ async function main(): Promise<void> {
       if (error) {
         console.error("Error:", error);
       } else {
-        console.log(
+        console.error(
           `Actual Budget MCP Server (SSE) started on port ${resolvedPort}`
         );
       }
@@ -113,7 +113,7 @@ async function main(): Promise<void> {
   } else {
     const transport = new StdioServerTransport();
     await server.connect(transport);
-    console.log("Actual Budget MCP Server (stdio) started");
+    console.error("Actual Budget MCP Server (stdio) started");
   }
 }
 
@@ -122,7 +122,7 @@ setupTools(server);
 setupPrompts(server);
 
 process.on("SIGINT", () => {
-  console.log("SIGINT received, shutting down server");
+  console.error("SIGINT received, shutting down server");
   server.close();
   process.exit(0);
 });

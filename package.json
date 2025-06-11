@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Actual Budget MCP server exposing API functionality",
   "private": false,
+  "type": "module",
   "main": "build/index.js",
   "bin": {
     "actual-mcp": "build/index.js"
