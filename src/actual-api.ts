@@ -3,6 +3,9 @@ import fs from "fs";
 import path from "path";
 import { BudgetFile } from "./types.js";
 
+// Track whether console.log has been redirected to stderr
+let logRedirected = false;
+
 const DEFAULT_DATA_DIR: string = path.resolve(
   process.env.HOME || process.env.USERPROFILE || ".",
   ".actual"
@@ -29,6 +32,11 @@ export async function initActualApi(): Promise<void> {
 
   try {
     console.error("Initializing Actual Budget API...");
+    if (!logRedirected) {
+      // Redirect any console.log output from the Actual API to stderr
+      console.log = (...args: unknown[]) => console.error(...args);
+      logRedirected = true;
+    }
     const dataDir = process.env.ACTUAL_DATA_DIR || DEFAULT_DATA_DIR;
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true });
