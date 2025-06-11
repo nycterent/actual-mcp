@@ -63,8 +63,7 @@ export ACTUAL_BUDGET_SYNC_ID="your-budget-id"
 
 ## Running with Docker or Podman
 
-You can also build and run the server in a container. From the project root
-build the image:
+You can also build and run the server in a container. From the project root build the image:
 
 ```bash
 docker build -t actual-mcp .
@@ -72,9 +71,9 @@ docker build -t actual-mcp .
 podman build -t actual-mcp .
 ```
 
-Run the container, providing your Actual configuration via environment
-variables. In stdio mode (recommended for Claude Desktop) you don't need to
-map any ports:
+### Running in stdio mode
+
+Provide your Actual configuration via environment variables. In stdio mode (recommended for Claude Desktop) no ports need to be mapped:
 
 ```bash
 docker run -i --rm \
@@ -82,12 +81,9 @@ docker run -i --rm \
   actual-mcp
 ```
 
-If connecting to a remote Actual server, set `ACTUAL_SERVER_URL` and
-`ACTUAL_PASSWORD` instead. Podman users can replace `docker` with `podman`
-in the commands above.
+### Running the SSE server
 
-To expose an SSE endpoint for other clients, run the container with `--sse` and
-map the port:
+To expose an SSE endpoint for other clients, run the container with `--sse` and map the port:
 
 ```bash
 docker run -it --rm \
@@ -95,10 +91,24 @@ docker run -it --rm \
   -p 3000:3000 actual-mcp --sse
 ```
 
+If connecting to a remote Actual server, set `ACTUAL_SERVER_URL` and `ACTUAL_PASSWORD` instead. Replace `docker` with `podman` in the commands if needed.
+
+With the SSE server running, any MCP-compatible client can connect to `http://localhost:3000`. For example, a Claude Desktop configuration might look like:
+
+```json
+{
+  "mcpServers": {
+    "actualBudget": {
+      "transport": "sse",
+      "url": "http://localhost:3000"
+    }
+  }
+}
+```
+
 ## Usage with Claude Desktop
 
-To use this server with Claude Desktop, add it to your configuration.
-If you are running the server directly with Node, use the following setup:
+To use this server with Claude Desktop, add it to your configuration. If you are running the server directly with Node, use the following setup:
 
 On MacOS:
 ```bash
@@ -125,8 +135,7 @@ Add the following to your configuration:
 }
 ```
 
-If you prefer to run the server through Docker or Podman, use a command-based
-configuration:
+If you prefer to run the server through Docker or Podman, use a command-based configuration:
 
 ```json
 {
@@ -143,9 +152,7 @@ configuration:
 }
 ```
 
-Replace `docker` with `podman` if needed.
-
-After saving the configuration, restart Claude Desktop.
+Replace `docker` with `podman` if needed. After saving the configuration, restart Claude Desktop.
 
 ## Example Queries
 
