@@ -68,6 +68,12 @@ export interface BalanceHistoryArgs {
   months?: number;
 }
 
+export interface CreateRuleArgs {
+  payee: string;
+  categoryId: string;
+  stage?: string;
+}
+
 // Type for prompt arguments
 export interface FinancialInsightsArgs {
   startDate?: string;
